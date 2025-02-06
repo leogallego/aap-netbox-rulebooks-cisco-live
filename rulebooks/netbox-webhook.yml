@@ -46,6 +46,6 @@
     condition: event is defined
     action:
       - set_fact:
-        full_event: "{{ event }}"
+          full_event: "{{ event }}"
       - debug:
-        msg: "Full Event Payload: {{ full_event }}"
+          msg: "Full Event Payload: {{ full_event }}"
