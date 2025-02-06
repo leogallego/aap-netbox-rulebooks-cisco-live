@@ -43,7 +43,7 @@
         name: "Provision New Device Workflow"
         
   - name: Debug NetBox Payload
-    condition: event is defined
+    condition: event.payload is defined
     action:
       debug:
         msg: "Event Payload: {{ event }}"
