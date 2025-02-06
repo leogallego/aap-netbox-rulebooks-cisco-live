@@ -45,7 +45,5 @@
   - name: Debug NetBox Payload
     condition: event is defined
     action:
-      - set_fact:
-          full_event: "{{ event }}"
-      - debug:
-          msg: "Full Event Payload: {{ full_event }}"
+      debug:
+        msg: "Event Payload: {{ event }}"
