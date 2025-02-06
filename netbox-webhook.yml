@@ -1,0 +1,43 @@
+---
+- name: Listen for NetBox events on a webhook
+  hosts: all
+  sources:
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5001
+
+  rules:
+  - name: NTP updates
+    condition: event.payload.event == "updated" and event.payload.model == "configcontext" and event.payload.data.name == "ntp_servers"
+    action:
+      run_job_template:
+        organization: "Default"
+        name: "Configure NTP Servers"
+        
+  - name: VLAN created
+    condition: event.payload.event == "created" and event.payload.model == "vlan" 
+    action:
+      run_job_template:
+        organization: "Default"
+        name: "Configure VLANs"
+
+  - name: VLAN deleted
+    condition: event.payload.event == "deleted" and event.payload.model == "vlan"
+    action:
+      run_job_template:
+        organization: "Default"
+        name: "Configure VLANs"
+
+  - name: Update login banner
+    condition: event.payload.event == "updated" and event.payload.model == "updated" and event.payload.data.name == "login_banner"
+    action:
+      run_job_template:
+        organization: "Default"
+        name: "Configure Login Banner"
+
+  - name: New Device Added
+    condition: event.payload.event == "created" and event.payload.model == "device"
+    action:
+      run_workflow_template:
+        organization: "Default"
+        name: "Provision New Device Workflow"
