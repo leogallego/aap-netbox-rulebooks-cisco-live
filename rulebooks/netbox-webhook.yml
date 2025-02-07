@@ -7,43 +7,38 @@
         port: 5001
 
   rules:
-  - name: NTP updates
-    condition: event.payload.event == "updated" and event.payload.model == "configcontext" and event.payload.data.name == "ntp_servers"
-    action:
-      run_job_template:
-        organization: "Default"
-        name: "Configure NTP Servers"
-        
-  - name: VLAN created
-    condition: event.payload.event == "created" and event.payload.model == "vlan" 
-    action:
-      run_job_template:
-        organization: "Default"
-        name: "Configure VLANs"
+    - name: NTP updates
+      condition: event.payload.event == "updated" and event.payload.model == "configcontext" and event.payload.data.name == "ntp_servers"
+      action:
+        run_job_template:
+          organization: "Default"
+          name: "Configure NTP Servers"
+          
+    - name: VLAN created
+      condition: event.payload.event == "created" and event.payload.model == "vlan"
+      action:
+        run_job_template:
+          organization: "Default"
+          name: "Configure VLANs"
 
-  - name: VLAN deleted
-    condition: event.payload.event == "deleted" and event.payload.model == "vlan"
-    action:
-      run_job_template:
-        organization: "Default"
-        name: "Configure VLANs"
+    - name: VLAN deleted
+      condition: event.payload.event == "deleted" and event.payload.model == "vlan"
+      action:
+        run_job_template:
+          organization: "Default"
+          name: "Configure VLANs"
 
-  - name: Update login banner
-    condition: event.payload.event == "updated" and event.payload.model == "updated" and event.payload.data.name == "login_banner"
-    action:
-      run_job_template:
-        organization: "Default"
-        name: "Configure Login Banner"
+    - name: Update login banner
+      condition: event.payload.event == "updated" and event.payload.model == "updated" and event.payload.data.name == "login_banner"
+      action:
+        run_job_template:
+          organization: "Default"
+          name: "Configure Login Banner"
 
-  - name: New Device Added
-    condition: event.payload.event == "created" and event.payload.model == "device"
-    action:
-      run_workflow_template:
-        organization: "Default"
-        name: "Provision New Device Workflow"
-        
-  - name: Debug NetBox Payload
-    condition: event.payload is defined
-    action:
-      debug:
-        msg: "Event Payload: {{ event }}"
+    - name: New Device Added
+      condition: event.payload.event == "created" and event.payload.model == "device"
+      action:
+        run_workflow_template:
+          organization: "Default"
+          name: "Provision New Device Workflow"
+
