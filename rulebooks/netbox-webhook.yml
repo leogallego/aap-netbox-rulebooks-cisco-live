@@ -29,7 +29,7 @@
           name: "Configure VLANs"
 
     - name: Update login banner
-      condition: event.payload.event == "updated" and event.payload.model == "updated" and event.payload.data.name == "login_banner"
+      condition: event.payload.event == "updated" and event.payload.model == "configcontext" and event.payload.data.name == "login_banner"
       action:
         run_job_template:
           organization: "Default"
